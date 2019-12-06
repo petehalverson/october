@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout changes
         uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
       - name: Install PHP
         uses: shivammathur/setup-php@master
         with:
@@ -30,9 +32,7 @@ jobs:
         run: |
           git reset --hard HEAD
           rm -rf ./vendor/october/rain
-          wget https://github.com/octobercms/library/archive/develop.zip -O ./vendor/october/develop.zip
-          unzip ./vendor/october/develop.zip -d ./vendor/october
-          mv ./vendor/october/library-develop ./vendor/october/rain
+          git clone https://github.com/octobercms/library.git vendor/october/rain -b develop
           composer dump-autoload
       - name: Run post-update Composer scripts
         run: |
