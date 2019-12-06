@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 6
       matrix:
-        phpVersions: ['7.1', '7.2', '7.3']
+        phpVersions: ['7.1', '7.2', '7.3', '7.4']
       fail-fast: false
     name: PHP ${{ matrix.phpVersions }}
     steps:
@@ -42,3 +42,4 @@ jobs:
         run: |
           ./vendor/bin/parallel-lint --exclude vendor --exclude storage --exclude tests/fixtures/plugins/testvendor/goto/Plugin.php .
           ./vendor/bin/phpunit
+        continue-on-error: ${{ matrix.phpVersions == '7.4' }}
